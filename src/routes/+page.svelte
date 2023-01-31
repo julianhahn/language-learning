@@ -1,12 +1,15 @@
 <script lang="ts">
+	import type {DatabaseCreateResponse} from 'nano'
 	import { onMount } from 'svelte';
-
+	export let data:DatabaseCreateResponse;
 	let files:File[]=[];
 
 onMount(() => {
 	document.addEventListener('paste',  async(event) => {
 				let pictures=<FileList>event.clipboardData?.files
 				saveFileLst(pictures)
+				console.log(data);
+				
 			}
 		)	
 	})
