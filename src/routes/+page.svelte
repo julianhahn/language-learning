@@ -16,7 +16,7 @@ onMount(() => {
 	
 function saveFileLst(pictureList:FileList){
 	for (let pic of pictureList){
-		files=[...files, pic]
+		files=[pic,...files]
 		console.log(files);
 	} 
 }
