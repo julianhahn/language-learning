@@ -35,6 +35,8 @@ function handleFile(file :File){
 function onInputHandler(event: HTMLInputElement){
 	if(event.files !== null){
 		saveFileLst(event.files)
+		console.log("test");
+		
 	}
 }
 
