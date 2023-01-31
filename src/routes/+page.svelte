@@ -32,6 +32,12 @@ function handleFile(file :File){
   }
 }
 
+function onInputHandler(event: HTMLInputElement){
+	if(event.files !== null){
+		saveFileLst(event.files)
+	}
+}
+
 </script>
 
 <svelte:head>
@@ -39,15 +45,16 @@ function handleFile(file :File){
 	<meta name="description" content="Svelte demo app" />
 </svelte:head>
 
+
 <div class="container">
 
-	<div><input type="file" multiple="multiple" accept="image/png" class="drag-drop-input" placeholder="Drag and drop a file here" on:input={(e) => saveFileLst(e.target.files)} ></div>	
+	<div><input type="file" multiple accept="image/png" class="drag-drop-input" placeholder="Drag and drop a file here" on:input={(e) => onInputHandler(e.currentTarget)} ></div>	
 	
 	<div>
 			{#each files as file}
 			<div class="card">
 				<div class="card-body">
-					<img src={URL.createObjectURL(file)} alt={file.name} on:click={handleFile(file)}/>
+					<img src={URL.createObjectURL(file)} alt={file.name} on:click={()=>{handleFile(file)}} on:keypress={()=>{handleFile(file)}}/>
 				</div>	
 			</div>
 			{/each}
