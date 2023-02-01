@@ -13,8 +13,9 @@ export const load = (async ({ params }) => {
 		const info = await nano_instance.db.get('alice');
 
 		return { key: info };
-	} catch (error) {
-		console.log('run into an error while load');
+	} catch (error: any) {
+		console.log("\x1b[31m", 'run into an error while server load');
+		console.log("\x1b[31m", error?.description);
 		return { message: 'no connection possible' };
 	}
 }) satisfies PageServerLoad;
