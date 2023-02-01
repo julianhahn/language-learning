@@ -1,5 +1,5 @@
  import nano from 'nano';
- import type { PageServerLoad } from './$types';
+ import type { PageServerLoad } from '../$types';
 
  export const load = (async ({ params }) => {
   console.log("hallo von dem backend")
