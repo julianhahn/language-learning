@@ -3,6 +3,7 @@ import nano from 'nano';
 import type { RequestHandler } from './$types';
 import { v4 as uuidv4 } from 'uuid';
 import { Buffer } from 'buffer';
+import fs from 'fs';
 
 export const POST = (async ({ request }) => {
 	let id;
@@ -11,16 +12,20 @@ export const POST = (async ({ request }) => {
 
 		const alice = await nano_instance.use('alice4');
 		const uuid = uuidv4();
+		console.log(uuid);
+
 		const lgg = (await request.json()) as string;
 
-		const buf = Buffer.from(lgg, 'base64');
-		const attachment = {
-			buffer: buf,
-			content_type: 'image/png'
-		};
-		await alice.attachment.insert(uuid, uuid + '.png', attachment, 'image/png');
+		fs.writeFile('../' + uuid + '.png', lgg, 'base64', function (err) {
+			console.log(err);
+		});
+		fs.readFile('../' + uuid + '.png', async (err, data) => {
+			if (!err) {
+				await alice.attachment.insert(uuid, uuid + '.png', data, 'image/png');
+			}
+		});
+
 		id = await alice.attachment.get(uuid, uuid + '.png');
-		console.log(id);
 	} catch (error: any) {
 		console.log('\x1b[31m', 'could not post', error);
 		console.log('\x1b[31m', error?.description);

@@ -9,11 +9,11 @@ export const load = (async ({ params }) => {
 		console.log('hallo von dem backend');
 		const nano_instance = nano('http://admin:marvinpw!@db.jul-mar.de');
 
-		const alice = await nano_instance.use('alice4');
+		/* 		const alice = await nano_instance.use('alice4');
 		const id = await alice.attachment.getAsStream(
 			'2ca49cda-77ed-4fed-a85c-2637f0106b78',
 			'2ca49cda-77ed-4fed-a85c-2637f0106b78.png'
-		);
+		); */
 
 		return { stream: 'tbc' };
 	} catch (error: any) {

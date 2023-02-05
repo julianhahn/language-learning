@@ -22,8 +22,9 @@
 					reader.onload = () => resolve(reader.result as string);
 				});
 			await toBase64(pic).then((str) => {
-				body = str;
-				console.log(str);
+				let blabla = str as string;
+				body = blabla.split(',')[1];
+				console.log(body);
 			});
 			/* 		const formD = new FormData();
 			formD.append('image', pic, 'image.png');
