@@ -8,14 +8,44 @@
 		document.addEventListener('paste', async (event) => {
 			let pictures = <FileList>event.clipboardData?.files;
 			saveFileLst(pictures);
-			console.log(data);
 		});
 	});
 
-	function saveFileLst(pictureList: FileList) {
+	async function saveFileLst(pictureList: FileList) {
 		for (let pic of pictureList) {
-			files = [pic, ...files];
-			console.log(files);
+			//files = [pic, ...files];
+			let body;
+			const toBase64 = (file: File) =>
+				new Promise((resolve, reject) => {
+					const reader = new FileReader();
+					reader.readAsDataURL(file);
+					reader.onload = () => resolve(reader.result as string);
+				});
+			await toBase64(pic).then((str) => {
+				body = str;
+				console.log(str);
+			});
+			/* 		const formD = new FormData();
+			formD.append('image', pic, 'image.png');
+ */
+			const response = await fetch('/api/copy_paste', {
+				method: 'POST',
+				//body: formD,
+				body: JSON.stringify(body),
+				headers: {
+					'content-type': 'image/png'
+					/* Accept: 'application/json' */
+				}
+			});
+
+			let lg = await response.json();
+			console.log(typeof lg);
+
+			const blob = new Blob([lg.data], { type: 'image/png' });
+			console.log(blob);
+			const file = new File([blob], 'image.png', { type: 'image/png' });
+			console.log(file);
+			files = [file, ...files];
 		}
 	}
 
